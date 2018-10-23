@@ -1,17 +1,11 @@
 <template>
   <div>
-    <form class="pa4" @submit.prevent="add(task)">
-      <input v-model="task" type="text" />
-      <input type="submit" value="Add" />
-    </form>
     <section class="container">
       <div class="ph4">
-        <div class="title">Todo</div>
+        <div class="title">Completed Todos</div>
         <ul class="list pl0">
           <li v-for="(todo, index) in todos" :key="index" class="pv4 flex">
             <span v-bind:class="{strike: todo.complete}" class="flex-auto">{{ todo.text }}</span>
-            <button @click="toggle(todo)"><img src="https://icon.now.sh/check" alt="Complete" /></button>
-            <button @click="remove(todo)"><img src="https://icon.now.sh/trash" alt="Delete" /></button>
           </li>
         </ul>
       </div>
@@ -25,14 +19,9 @@ import { init } from './shared'
  
 export default {
   fetch: init,
-  data() {
-    return {
-      task: ''
-    }
-  },
   computed: {
     ...mapState({
-      todos: state => state.todos
+      todos: state => state.todos.filter(todo => todo.complete)
     })
   },
   
